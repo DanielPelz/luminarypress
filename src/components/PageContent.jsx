@@ -17,8 +17,8 @@ const PageContent = ({ content, loading, error, fetchPageContent, postId }) => {
     <div>
       <h2>Page Content</h2>
       {loading && <p>Loading...</p>}
-      {content.map((page) => (
-        <div key={page.id}>
+      {content.map((page,index) => (
+        <div key={index}>
           <h3>{page.title.rendered}</h3>
           <p>{page.content.rendered}</p>
         </div>

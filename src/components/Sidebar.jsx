@@ -1,6 +1,6 @@
 import React, { memo } from "react";
 import { useDrag } from "react-dnd";
-import { useDispatch, connect } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import _ from "lodash";
 import { search } from "../actions/visualBuilderActions";
 
@@ -8,25 +8,19 @@ const debouncedSearch = _.debounce((searchTerm, dispatch) => {
   dispatch(search(searchTerm));
 }, 500);
 
-const mapStateToProps = (state) => ({
-  themes: state.themes.themes,
-  plugins: state.plugins.plugins,
-  widgets: state.widgets.widgets,
-  shortcodes: state.shortcodes.shortcodes,
-});
-
 const DraggableItem = memo(({ item }) => {
-  if (!item.type) {
+  if (!item.id_base) {
     console.error("Item type is not defined:", item);
     return null;
   }
 
-  const [{ isDragging }, drag] = useDrag({
-    item: { type: item.type },
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: item.id_base,
+    item: { id: item.id_base },
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
     }),
-  });
+  }));
 
   return (
     <div
@@ -39,8 +33,13 @@ const DraggableItem = memo(({ item }) => {
   );
 });
 
-const Sidebar = ({ themes, plugins, widgets, shortcodes }) => {
+
+const Sidebar = () => {
   const dispatch = useDispatch();
+  const themes = useSelector((state) => state.themes.themes);
+  const plugins = useSelector((state) => state.plugins.plugins);
+  const widgets = useSelector((state) => state.widgets.widgets);
+  const shortcodes = useSelector((state) => state.shortcodes.shortcodes);
 
   const itemList = [...themes, ...plugins, ...widgets, ...shortcodes];
 
@@ -56,12 +55,14 @@ const Sidebar = ({ themes, plugins, widgets, shortcodes }) => {
       itemList
         .filter(
           (item) =>
-            typeof item.name === 'string' &&
+            item.id_base &&
+            typeof item.name === "string" &&
             item.name.toLowerCase().includes(searchTerm.toLowerCase())
         )
-        .map((item) => <DraggableItem key={item.id} item={item} />),
+        .map((item) => <DraggableItem key={item.id_base} item={item} />),
     [itemList, searchTerm]
   );
+  
 
   return (
     <div className="sidebar">
@@ -76,4 +77,4 @@ const Sidebar = ({ themes, plugins, widgets, shortcodes }) => {
   );
 };
 
-export default connect(mapStateToProps)(Sidebar);
+export default Sidebar;

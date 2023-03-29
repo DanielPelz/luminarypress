@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { fetchWidgets } from '../actions/widgetsActions';
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { fetchWidgets } from "../actions/widgetsActions";
 
 const WidgetsList = ({ widgets, loading, error, fetchWidgets }) => {
   useEffect(() => {
@@ -8,18 +8,18 @@ const WidgetsList = ({ widgets, loading, error, fetchWidgets }) => {
   }, [fetchWidgets]);
 
   return (
-        <div>
-            <h2>Widgets List</h2>
-            {loading && <p>Loading...</p>}
-            {error && <p>{error}</p>}
-            {widgets.map((widget) => (
-                <div key={widget.id_base}>
-                    <h3>{widget.name}</h3>
-                    <p>{widget.id_base}</p>
-                </div>
-            ))}
+    <div>
+      <h2>Widgets List</h2>
+      {loading && <p>Loading...</p>}
+      {error && <p>{error}</p>}
+      {widgets.map((widget, index) => (
+        <div key={index}>
+          <h3>{widget.name}</h3>
+          <p>{widget.id_base}</p>
         </div>
-    );
+      ))}
+    </div>
+  );
 };
 
 const mapStateToProps = (state) => ({

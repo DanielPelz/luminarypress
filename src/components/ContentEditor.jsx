@@ -38,34 +38,6 @@ const ContentEditor = ({ initialContent, onSave }) => {
     return EditorState.createEmpty();
   });
 
-  const handleKeyCommand = (command, editorState) => {
-    const newState = RichUtils.handleKeyCommand(editorState, command);
-    if (newState) {
-      setEditorState(newState);
-      return 'handled';
-    }
-    return 'not-handled';
-  };
-
-  const mapKeyToEditorCommand = (e) => {
-    if (e.keyCode === 9 /* TAB */) {
-      const newEditorState = RichUtils.onTab(e, editorState, 4 /* maxDepth */);
-      if (newEditorState !== editorState) {
-        setEditorState(newEditorState);
-      }
-      return;
-    }
-    return getDefaultKeyBinding(e);
-  };
-
-  const toggleBlockType = (blockType) => {
-    setEditorState(RichUtils.toggleBlockType(editorState, blockType));
-  };
-
-  const toggleInlineStyle = (inlineStyle) => {
-    setEditorState(RichUtils.toggleInlineStyle(editorState, inlineStyle));
-  };
-
   const saveContent = () => {
     const contentState = editorState.getCurrentContent();
     const rawContent = convertToRaw(contentState);
@@ -75,43 +47,30 @@ const ContentEditor = ({ initialContent, onSave }) => {
 
   return (
     <div className="content-editor">
-      <div className="toolbar">
-        {BLOCK_TYPES.map((type) => (
-          <button
-            key={type.label}
-            onMouseDown={(e) => {
-              e.preventDefault();
-              toggleBlockType(type.style);
-            }}
-          >
-            {type.label}
-          </button>
-        ))}
-        {INLINE_STYLES.map((type) => (
-          <button
-            key={type.label}
-            onMouseDown={(e) => {
-              e.preventDefault();
-              toggleInlineStyle(type.style);
-            }}
-          >
-            {type.label}
-          </button>
-        ))}
-      </div>
       <Editor
-        editorState={editorState}
-        handleKeyCommand={handleKeyCommand}
-        keyBindingFn={mapKeyToEditorCommand}
-        onChange={setEditorState}
-        toolbar={{
-          options: ['inline', 'blockType', 'fontSize', 'list', 'textAlign', 'colorPicker', 'link', 'embedded', 'emoji', 'image', 'remove', 'history'],
-          inline: { inDropdown: false },
-          list: { inDropdown: false },
-          textAlign: { inDropdown: false },
-          link: { inDropdown: false },
-          history: { inDropdown: false },
-        }}
+       editorState={editorState}
+       onChange={setEditorState}
+       toolbar={{
+       options: [
+       'inline',
+       'blockType',
+       'fontSize',
+       'list',
+       'textAlign',
+       'colorPicker',
+       'link',
+       'embedded',
+       'emoji',
+       'image',
+       'remove',
+       'history',
+       ],
+       inline: { inDropdown: false },
+       blockType: { inDropdown: false },
+       list: { inDropdown: false },
+       textAlign: { inDropdown: false },
+       link: { inDropdown: false },
+       history: { inDropdown: false },}}
       />
       <button onClick={saveContent}>Save</button>
     </div>

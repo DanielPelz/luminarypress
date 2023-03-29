@@ -23,8 +23,8 @@ const ThemeSelector = () => {
   return (
     <div className="theme-selector">
       <ul>
-        {themes.map((theme) => (
-          <li key={theme.id}>{theme.name}</li>
+        {themes.map((theme,index) => (
+          <li key={index}>{theme.name.rendered}</li>
         ))}
       </ul>
     </div>

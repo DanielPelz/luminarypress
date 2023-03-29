@@ -15,8 +15,8 @@ const ThemesList = ({ themes, loading, error, fetchThemes }) => {
       {error && <p>{error}</p>}
       {themes && (
         <ul>
-          {themes.map((theme) => (
-            <li key={theme.stylesheet}>{theme.name.rendered}</li>
+          {themes.map((theme, index) => (
+            <li key={index}>{theme.name.rendered}</li>
           ))}
         </ul>
       )}

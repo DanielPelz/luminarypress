@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchPlugins } from '../features/selectors';
+import { fetchPlugins } from '../actions/pluginsActions';
 
 const PluginSelector = () => {
   const plugins = useSelector((state) => state.selectors.plugins);
@@ -23,8 +23,8 @@ const PluginSelector = () => {
   return (
     <div className="plugin-selector">
       <ul>
-        {plugins.map((plugin) => (
-          <li key={plugin.id}>{plugin.name}</li>
+        {plugins.map((plugin, index) => (
+          <li key={index}>{plugin.name}</li>
         ))}
       </ul>
     </div>

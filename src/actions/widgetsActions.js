@@ -18,7 +18,7 @@ export const fetchWidgets = () => async(dispatch) => {
     dispatch(fetchWidgetsRequest());
     try {
         const response = await wpApi.get('/luminarypress/v1/widgets');
-
+        console.log('Widgets:', response.data);
         dispatch(fetchWidgetsSuccess(response.data));
     } catch (error) {
         dispatch(fetchWidgetsFailure(error.message));

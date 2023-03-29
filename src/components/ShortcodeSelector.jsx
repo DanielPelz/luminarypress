@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchShortcodes } from '../features/selectors';
+import { fetchShortcodes } from '../actions/shortcodesActions';
 
 const ShortcodeSelector = () => {
   const shortcodes = useSelector((state) => state.selectors.shortcodes);
@@ -23,8 +23,8 @@ const ShortcodeSelector = () => {
   return (
     <div className="shortcode-selector">
       <ul>
-        {shortcodes.map((shortcode) => (
-          <li key={shortcode.id}>{shortcode.name}</li>
+        {shortcodes.map((shortcode, index) => (
+          <li key={index}>{shortcode.name}</li>
         ))}
       </ul>
     </div>

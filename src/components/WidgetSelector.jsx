@@ -23,8 +23,8 @@ const WidgetSelector = () => {
   return (
     <div className="widget-selector">
       <ul>
-        {widgets.map((widget) => (
-          <li key={widget.id}>{widget.name}</li>
+        {widgets.map((widget, index) => (
+          <li key={index}>{widget.name}</li>
         ))}
       </ul>
     </div>

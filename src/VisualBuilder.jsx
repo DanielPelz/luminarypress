@@ -7,7 +7,7 @@ import PageContent from "./components/PageContent";
 import ContentEditor from "./components/ContentEditor";
 import Sidebar from "./components/Sidebar";
 import Toolbar from "./components/Toolbar";
-import Canvas from "./components/Canvas";
+import Canvas from "./components/canvas";
 
 const VisualBuilder = ({ postId }) => {
    
